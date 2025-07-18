@@ -25,3 +25,19 @@
 
 ## Streamlit Dashboard with Real-Time Monitoring & Analytics:
 ####  •	Analyze automated bot’s trading performance and strategy.
+
+## Setup
+To download data from Binance, `data_utils.fetch_crypto_data` requires the environment variables `BINANCE_API_KEY` and `BINANCE_SECRET`.
+Export them in your shell or provide them via a `.env` file.
+
+```bash
+export BINANCE_API_KEY=your_api_key
+export BINANCE_SECRET=your_api_secret
+```
+
+`.env` example:
+
+```
+BINANCE_API_KEY=your_api_key
+BINANCE_SECRET=your_api_secret
+```
