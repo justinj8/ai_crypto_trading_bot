@@ -1,34 +1,29 @@
-# Cryptocurrency Algorithmic Trading Bot
+# AI Cryptocurrency Trading Bot
 
-#### A Cryptocurrency algorithmic trading model that uses Machine Learning Ensemble (LSTM + XGBoost + Transformer) to predict the cryptocurrency market accurately, Reinforcement Learning to manage risk dynamically in real-time, Advanced NLP sentiment analytics to leverage Twitter & Reddit, ChatGPT to provide strategic trading decisions, Advanced position sizing & risk management to ensure profits are maximized with medium risk. All of the model analytics/P&L results are shown on a real-time Streamlit dashboard. 
+This repository provides a starting point for building an algorithmic trading system for digital assets. It focuses on a data pipeline for retrieving market data, feature engineering through technical indicators, and a basic machine-learning ensemble for price prediction. The project is intended as a foundation that can be extended with reinforcement learning, sentiment analysis, and natural-language-driven strategy modules.
 
+## Features
 
-## Machine Learning Ensemble:
-####  •	LSTM for short-term price trends.
-####	•	XGBoost for feature importance and market insights.
-####	•	Transformer (Time-series Transformer) for long-term pattern capturing.
+- **Data ingestion**: Uses the [`ccxt`](https://github.com/ccxt/ccxt) library to download OHLCV data from Binance.
+- **Technical indicators**: Computes commonly used indicators such as SMA, RSI, MACD, and ATR using the [`ta`](https://technical-analysis-library-in-python.readthedocs.io/en/latest/) library.
+- **Machine-learning ensemble**:
+  - LSTM network (TensorFlow/Keras) for capturing short-term temporal dynamics.
+  - XGBoost regressor for tabular feature modeling.
+  - Predictions from both models are averaged to produce the final forecast.
+- **Extensibility**: The structure is designed to accommodate additional components such as reinforcement-learning policies (e.g., PPO with Ray RLlib), sentiment analysis of Reddit/Twitter data, GPT-based trading insights, and a Streamlit dashboard for real-time analytics.
 
- 
-## Reinforcement Learning for Dynamic Risk Management:
-####  • Integrate PPO Reinforcement Learning (with Ray RLlib)
-#### _Why?_ _The model can dynamically adjust position sizing & stop-loss levels based on evolving market conditions._
+## Installation
 
+1. Create and activate a Python 3.9+ virtual environment.
+2. Install dependencies:
 
-## Sentiment Analysis & NLP Integration:
-####  •	NLP Strategy: Weighted sentiment analysis to capture deeper market emotion. (60% Reddit sentiment + 40% Twitter sentiment)
+   ```bash
+   pip install -r requirements.txt
+   ```
 
+## Environment variables
 
-## ChatGPT Integration - (Model: GPT-4.0):
-####  •	The algorithmic trading model offers hedge-fund level strategic advice based on comprehensive market data.
-####  •	Smart ATR-based stop-loss and dynamic position sizing.
-
-
-## Streamlit Dashboard with Real-Time Monitoring & Analytics:
-####  •	Analyze automated bot’s trading performance and strategy.
-
-## Setup
-To download data from Binance, `data_utils.fetch_crypto_data` requires the environment variables `BINANCE_API_KEY` and `BINANCE_SECRET`.
-Export them in your shell or provide them via a `.env` file.
+`data_utils.fetch_crypto_data` requires Binance API credentials. Supply them via environment variables or a `.env` file:
 
 ```bash
 export BINANCE_API_KEY=your_api_key
@@ -41,3 +36,34 @@ export BINANCE_SECRET=your_api_secret
 BINANCE_API_KEY=your_api_key
 BINANCE_SECRET=your_api_secret
 ```
+
+## Example usage
+
+```python
+from data_utils import fetch_crypto_data, add_technical_indicators
+from ml_model import train_models, predict_next_price
+
+# Download data and build features
+frame = fetch_crypto_data(symbol="BTC/USDT", timeframe="1h")
+frame = add_technical_indicators(frame)
+features = ["sma_20", "rsi", "macd", "atr"]
+
+# Train models and make a prediction
+train_models(frame, features)
+next_price = predict_next_price(frame, features)
+print(f"Predicted next close: {next_price:.2f}")
+```
+
+## Roadmap
+
+Planned future enhancements include:
+
+- Reinforcement learning for dynamic position sizing and risk management.
+- Weighted sentiment analysis drawing from Reddit and Twitter streams.
+- Integration with large language models such as GPT‑4 for high-level strategy advice.
+- Streamlit dashboard for monitoring P&L and key metrics in real time.
+
+## Disclaimer
+
+This project is for educational purposes only and does not constitute financial advice. Use at your own risk.
+
