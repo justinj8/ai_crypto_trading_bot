@@ -422,9 +422,3 @@ Contributions are welcome! Please:
 - [TA-Lib](https://github.com/mrjbq7/ta-lib) - Technical analysis library
 - [TensorFlow](https://www.tensorflow.org/) - Deep learning framework
 - [XGBoost](https://xgboost.readthedocs.io/) - Gradient boosting library
-
----
-
-**Built with ❤️ for algorithmic traders**
-
-*Happy Trading! 🚀📈*
