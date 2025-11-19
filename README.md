@@ -11,11 +11,11 @@ A **sophisticated, production-grade AI-powered cryptocurrency trading bot** feat
 - **Ensemble Learning**: Intelligent combination of multiple models with confidence scoring
 
 ### **Comprehensive Trading Strategies**
-- ML-based prediction strategies with confidence thresholds
-- Momentum and trend-following strategies
-- Mean reversion strategies
-- Statistical arbitrage (planned)
-- Market making (planned)
+- **ML Ensemble Strategy**: Combines LSTM, Transformer, and XGBoost predictions with confidence scoring and trend filtering
+- **Momentum Strategy**: Multi-indicator trend following using RSI, MACD, ADX, volume confirmation
+- **Mean Reversion Strategy**: Statistical trading using Bollinger Bands, z-scores, RSI oversold/overbought conditions
+- **Base Strategy Framework**: Extensible architecture for custom strategy development
+- **Coming Soon**: Statistical arbitrage, market making, multi-timeframe strategies
 
 ### **Advanced Technical Analysis**
 - **50+ Technical Indicators**:
@@ -34,12 +34,14 @@ A **sophisticated, production-grade AI-powered cryptocurrency trading bot** feat
 - **Correlation Management**: Prevent over-exposure to correlated assets
 
 ### **Professional Infrastructure**
-- Event-driven architecture for scalability
-- SQLite database for trade/position persistence
-- Comprehensive logging and monitoring
-- Real-time performance metrics
-- Paper trading mode for testing
-- Backtesting engine with realistic simulation
+- **Event-Driven Architecture**: Scalable design with market, signal, order, and fill events
+- **Order Execution Engine**: Smart routing with TWAP, VWAP, and iceberg algorithms
+- **Backtesting Engine**: Realistic simulation with slippage, commissions, and partial fills
+- **Database Layer**: SQLite persistence for trades, positions, orders, and performance
+- **Advanced Analytics**: Sharpe, Sortino, Calmar, Omega ratios, VaR, CVaR calculations
+- **Comprehensive Logging**: Multi-level logging with file rotation and error tracking
+- **Configuration System**: YAML-based configs with environment variable support
+- **Visualization**: Automated equity curves, drawdown charts, and trade distributions
 
 ## 📊 Architecture Overview
 
@@ -165,13 +167,36 @@ ENSEMBLE:
 
 ### 2. Backtest Strategies
 
-Test strategies on historical data:
+Test strategies on historical data with realistic simulation:
 
 ```bash
-python scripts/backtest.py --strategy ml_ensemble --start 2023-01-01 --end 2024-01-01
+# Backtest specific strategy
+python scripts/backtest.py --strategy momentum --start 2023-01-01 --end 2024-01-01
+
+# Backtest all strategies and compare
+python scripts/backtest.py --strategy all --start 2023-01-01 --end 2024-01-01
+
+# Custom configuration
+python scripts/backtest.py --strategy mean_reversion --symbols BTC/USDT ETH/USDT --capital 50000 --commission 0.001
 ```
 
-### 3. Paper Trading
+**Features:**
+- Event-driven simulation with realistic order execution
+- Slippage and commission modeling
+- Stop-loss and take-profit management
+- Comprehensive performance metrics (Sharpe, Sortino, Calmar, Omega, VaR, CVaR)
+- Visual equity curves and drawdown charts
+- Trade distribution analysis
+- Strategy comparison
+
+**Output:**
+The backtest generates:
+- Detailed performance report in console
+- Equity curve plot (`logs/equity_curve.png`)
+- Drawdown chart (`logs/drawdown.png`)
+- Trade distribution plots (`logs/trade_distribution.png`)
+
+### 3. Paper Trading (Coming Soon)
 
 Test the bot with live data but simulated trades:
 
@@ -180,7 +205,7 @@ Test the bot with live data but simulated trades:
 python scripts/live_trading.py
 ```
 
-### 4. Live Trading
+### 4. Live Trading (Coming Soon)
 
 ⚠️ **Use at your own risk!** Only enable after thorough testing.
 
@@ -189,7 +214,7 @@ python scripts/live_trading.py
 python scripts/live_trading.py
 ```
 
-### 5. Dashboard
+### 5. Dashboard (Coming Soon)
 
 Launch the real-time monitoring dashboard:
 
@@ -334,22 +359,51 @@ Profitable Trades: 128
 
 ## 🗺️ Roadmap
 
-- [x] Advanced ML models (LSTM, Transformer, XGBoost)
+**Phase 1: Core Infrastructure** ✅
+- [x] Advanced ML models (LSTM, Transformer, XGBoost, Ensemble)
 - [x] Comprehensive technical indicators (50+)
-- [x] Risk management system
-- [x] Portfolio management
-- [x] Paper trading mode
+- [x] Risk management system with Kelly Criterion
+- [x] Portfolio management and tracking
 - [x] Event-driven architecture
-- [ ] Backtesting engine (in progress)
-- [ ] Live trading engine (in progress)
-- [ ] Sentiment analysis integration
-- [ ] On-chain metrics
+- [x] Database layer (SQLite)
+- [x] Configuration system (YAML)
+- [x] Logging and monitoring
+
+**Phase 2: Trading Strategies** ✅
+- [x] ML-based ensemble strategy
+- [x] Momentum strategy (multi-indicator)
+- [x] Mean reversion strategy (statistical)
+- [x] Base strategy framework for extensibility
+
+**Phase 3: Execution & Testing** ✅
+- [x] Event-driven backtesting engine
+- [x] Order execution engine (Market, Limit, TWAP, VWAP)
+- [x] Paper trading mode
+- [x] Advanced performance analytics (Sharpe, Sortino, Calmar, Omega, VaR, CVaR)
+- [x] Backtesting script with visualization
+
+**Phase 4: Advanced Features** 🚧
+- [ ] Live trading engine (main orchestration loop)
+- [ ] Multi-timeframe analysis
+- [ ] Walk-forward optimization
+- [ ] Feature selection and importance analysis
+- [ ] Order book analysis
+- [ ] Real-time dashboard (Streamlit)
+
+**Phase 5: Alternative Data** 📋
+- [ ] Sentiment analysis (Twitter, Reddit, News)
+- [ ] On-chain metrics integration
+- [ ] Order flow analysis
+- [ ] Market microstructure analysis
+
+**Phase 6: Production Features** 📋
+- [ ] Notification system (Email, Telegram, Slack)
 - [ ] Multi-exchange support
+- [ ] Cloud deployment (AWS, GCP)
+- [ ] API for external integration
+- [ ] Mobile monitoring app
 - [ ] Reinforcement learning strategies
 - [ ] Options trading support
-- [ ] Web dashboard
-- [ ] Mobile app
-- [ ] Cloud deployment
 
 ## ⚠️ Disclaimer
 
