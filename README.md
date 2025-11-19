@@ -405,22 +405,6 @@ Profitable Trades: 128
 - [ ] Reinforcement learning strategies
 - [ ] Options trading support
 
-## ⚠️ Disclaimer
-
-**This software is for educational and research purposes only.**
-
-- Cryptocurrency trading carries substantial risk
-- Past performance does not guarantee future results
-- This bot can lose money
-- Only trade with capital you can afford to lose
-- The developers are not responsible for any financial losses
-- Always test thoroughly in paper trading mode first
-- Use at your own risk
-
-## 📝 License
-
-MIT License - See LICENSE file for details
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please:
@@ -431,12 +415,8 @@ Contributions are welcome! Please:
 4. Add tests
 5. Submit a pull request
 
-## 📞 Support
 
-- GitHub Issues: For bug reports and feature requests
-- Discussions: For questions and community support
-
-## 🙏 Acknowledgments
+## Data Sources
 
 - [CCXT](https://github.com/ccxt/ccxt) - Cryptocurrency exchange API
 - [TA-Lib](https://github.com/mrjbq7/ta-lib) - Technical analysis library
