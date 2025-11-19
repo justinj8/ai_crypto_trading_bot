@@ -1,0 +1,302 @@
+# AI Crypto Trading Bot - Main Configuration
+# ===========================================
+
+# Trading Mode
+mode: "paper"  # Options: "paper", "live", "backtest"
+
+# Exchange Configuration
+exchange:
+  name: "binance"
+  api_key_env: "BINANCE_API_KEY"
+  secret_key_env: "BINANCE_SECRET"
+  testnet: false
+  rate_limit: true
+  enable_rate_limit: true
+  timeout: 30000
+
+# Trading Pairs
+symbols:
+  - "BTC/USDT"
+  - "ETH/USDT"
+  - "BNB/USDT"
+  - "ADA/USDT"
+  - "SOL/USDT"
+
+# Timeframes for analysis
+timeframes:
+  primary: "1h"
+  secondary: ["5m", "15m", "4h", "1d"]
+
+# Data Settings
+data:
+  lookback_days: 365
+  min_data_points: 1000
+  cache_enabled: true
+  cache_ttl: 300  # seconds
+  real_time_enabled: true
+  websocket_enabled: true
+
+# Database
+database:
+  type: "sqlite"  # Options: "sqlite", "postgresql"
+  path: "data/databases/trading.db"
+  # For PostgreSQL:
+  # host: "localhost"
+  # port: 5432
+  # name: "crypto_trading"
+  # user_env: "DB_USER"
+  # password_env: "DB_PASSWORD"
+
+# Machine Learning Models
+ml_models:
+  enabled: true
+  auto_retrain: true
+  retrain_interval_hours: 24
+  models:
+    lstm:
+      enabled: true
+      sequence_length: 60
+      layers: [128, 64]
+      dropout: 0.3
+      epochs: 100
+      batch_size: 32
+    transformer:
+      enabled: true
+      d_model: 128
+      nhead: 8
+      num_layers: 4
+      dropout: 0.1
+      epochs: 50
+    xgboost:
+      enabled: true
+      n_estimators: 200
+      max_depth: 7
+      learning_rate: 0.05
+      subsample: 0.8
+    reinforcement:
+      enabled: true
+      algorithm: "PPO"  # Options: "PPO", "A2C", "DQN"
+      total_timesteps: 100000
+      learning_rate: 0.0003
+
+# Feature Engineering
+features:
+  technical_indicators:
+    - "sma_20"
+    - "sma_50"
+    - "sma_200"
+    - "ema_12"
+    - "ema_26"
+    - "rsi_14"
+    - "macd"
+    - "bollinger_bands"
+    - "atr_14"
+    - "stochastic"
+    - "adx"
+    - "cci"
+    - "williams_r"
+    - "obv"
+    - "mfi"
+    - "vwap"
+    - "fibonacci_retracements"
+    - "ichimoku"
+    - "parabolic_sar"
+
+  price_features:
+    - "returns"
+    - "log_returns"
+    - "volatility"
+    - "high_low_range"
+    - "volume_change"
+
+  alternative_data:
+    sentiment_enabled: true
+    onchain_enabled: true
+    orderbook_enabled: true
+
+# Trading Strategies
+strategies:
+  enabled:
+    - "ml_ensemble"
+    - "momentum"
+    - "mean_reversion"
+    - "statistical_arbitrage"
+
+  ml_ensemble:
+    model_weights:
+      lstm: 0.3
+      transformer: 0.3
+      xgboost: 0.2
+      reinforcement: 0.2
+    confidence_threshold: 0.65
+    min_prediction_horizon: 4  # hours
+
+  momentum:
+    fast_period: 12
+    slow_period: 26
+    signal_period: 9
+    rsi_oversold: 30
+    rsi_overbought: 70
+
+  mean_reversion:
+    lookback_period: 20
+    std_dev_threshold: 2.0
+    exit_threshold: 0.5
+
+  statistical_arbitrage:
+    pairs:
+      - ["BTC/USDT", "ETH/USDT"]
+    cointegration_threshold: 0.05
+    z_score_entry: 2.0
+    z_score_exit: 0.5
+
+# Risk Management
+risk_management:
+  max_portfolio_risk: 0.02  # 2% of portfolio per trade
+  max_position_size: 0.10   # 10% of portfolio per position
+  max_total_exposure: 0.50  # 50% of portfolio in positions
+  max_drawdown: 0.15        # 15% maximum drawdown
+
+  position_sizing:
+    method: "kelly_criterion"  # Options: "fixed", "percent", "kelly_criterion", "volatility_adjusted"
+    kelly_fraction: 0.5  # Half-Kelly for safety
+    min_position_size_usd: 50
+    max_position_size_usd: 10000
+
+  stop_loss:
+    enabled: true
+    type: "trailing"  # Options: "fixed", "trailing", "atr_based"
+    trailing_percent: 0.03  # 3%
+    atr_multiplier: 2.0
+
+  take_profit:
+    enabled: true
+    risk_reward_ratio: 2.0  # 2:1 reward/risk
+    partial_take_profit:
+      - level: 0.5
+        percent: 0.5  # Take 50% at 50% of target
+
+  correlation_limits:
+    max_correlation: 0.7  # Don't enter highly correlated positions
+
+  leverage:
+    enabled: false
+    max_leverage: 1.0
+
+# Order Execution
+execution:
+  order_type: "limit"  # Options: "market", "limit"
+  limit_price_offset: 0.001  # 0.1% better than market
+  timeout_seconds: 60
+  max_slippage: 0.005  # 0.5%
+
+  algorithms:
+    twap:
+      enabled: true
+      num_orders: 10
+      interval_seconds: 60
+    vwap:
+      enabled: true
+      lookback_bars: 20
+
+  smart_routing:
+    enabled: true
+    check_multiple_exchanges: false
+
+# Backtesting
+backtesting:
+  start_date: "2023-01-01"
+  end_date: "2024-12-31"
+  initial_capital: 10000
+  commission: 0.001  # 0.1%
+  slippage_model: "fixed"  # Options: "fixed", "volume_based"
+  slippage_percent: 0.001  # 0.1%
+
+# Performance Metrics
+metrics:
+  calculate:
+    - "total_return"
+    - "sharpe_ratio"
+    - "sortino_ratio"
+    - "max_drawdown"
+    - "win_rate"
+    - "profit_factor"
+    - "calmar_ratio"
+    - "omega_ratio"
+    - "var_95"
+    - "cvar_95"
+
+  benchmark_symbol: "BTC/USDT"
+  risk_free_rate: 0.02  # 2% annual
+
+# Logging
+logging:
+  level: "INFO"  # Options: "DEBUG", "INFO", "WARNING", "ERROR"
+  file_enabled: true
+  console_enabled: true
+  log_trades: true
+  log_signals: true
+  log_performance: true
+  rotation: "daily"
+  retention_days: 30
+
+# Alerts & Notifications
+alerts:
+  enabled: false
+  email:
+    enabled: false
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    from_email_env: "ALERT_EMAIL"
+    password_env: "ALERT_EMAIL_PASSWORD"
+    to_email_env: "RECIPIENT_EMAIL"
+
+  telegram:
+    enabled: false
+    bot_token_env: "TELEGRAM_BOT_TOKEN"
+    chat_id_env: "TELEGRAM_CHAT_ID"
+
+  alert_on:
+    - "trade_executed"
+    - "stop_loss_triggered"
+    - "max_drawdown_exceeded"
+    - "model_retrained"
+    - "error_occurred"
+
+# Dashboard
+dashboard:
+  enabled: true
+  host: "localhost"
+  port: 8501
+  auto_refresh: true
+  refresh_interval: 5  # seconds
+
+# Advanced Features
+advanced:
+  sentiment_analysis:
+    sources:
+      - "twitter"
+      - "reddit"
+      - "news"
+    update_interval_minutes: 15
+
+  onchain_metrics:
+    enabled: false
+    metrics:
+      - "nvt_ratio"
+      - "mvrv_ratio"
+      - "active_addresses"
+      - "exchange_flows"
+
+  orderbook_analysis:
+    enabled: true
+    depth_levels: 20
+    imbalance_threshold: 0.3
+
+  portfolio_optimization:
+    enabled: true
+    method: "mean_variance"  # Options: "mean_variance", "risk_parity", "black_litterman"
+    rebalance_frequency: "weekly"
+    constraints:
+      min_weight: 0.0
+      max_weight: 0.3

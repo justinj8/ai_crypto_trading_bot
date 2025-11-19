@@ -1,0 +1,70 @@
+# Risk Limits Configuration
+# =========================
+
+# Global Portfolio Limits
+portfolio:
+  max_total_value: 100000  # USD
+  min_cash_reserve: 0.10   # 10% cash reserve
+  max_positions: 10
+  max_daily_loss: 0.05     # 5% max daily loss
+  max_weekly_loss: 0.10    # 10% max weekly loss
+
+# Per-Symbol Limits
+symbol_limits:
+  default:
+    max_position_usd: 10000
+    max_daily_trades: 20
+    max_order_size_usd: 5000
+
+  "BTC/USDT":
+    max_position_usd: 20000
+    max_daily_trades: 30
+    max_order_size_usd: 10000
+
+  "ETH/USDT":
+    max_position_usd: 15000
+    max_daily_trades: 25
+    max_order_size_usd: 7500
+
+# Strategy-Specific Limits
+strategy_limits:
+  ml_ensemble:
+    max_risk_per_trade: 0.02
+    max_positions: 5
+
+  momentum:
+    max_risk_per_trade: 0.015
+    max_positions: 4
+
+  mean_reversion:
+    max_risk_per_trade: 0.01
+    max_positions: 6
+
+  statistical_arbitrage:
+    max_risk_per_trade: 0.01
+    max_positions: 4
+
+# Circuit Breakers
+circuit_breakers:
+  volatility_halt:
+    enabled: true
+    threshold: 0.10  # Halt if volatility > 10% in 1 hour
+
+  drawdown_halt:
+    enabled: true
+    threshold: 0.10  # Halt if drawdown > 10%
+
+  correlation_spike:
+    enabled: true
+    threshold: 0.9   # Halt if correlations spike above 0.9
+
+  loss_limit_halt:
+    enabled: true
+    consecutive_losses: 5
+    total_loss_percent: 0.05
+
+# Recovery Settings
+recovery:
+  auto_resume: true
+  cooldown_period_minutes: 30
+  reduce_position_size: 0.5  # Reduce to 50% after recovery
